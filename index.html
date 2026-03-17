@@ -68,20 +68,17 @@
   // Camera controls
   const controls = new SparkControls({ canvas: renderer.domElement });
 
-  // Auto-orbit state
-  const orbitCenter = new THREE.Vector3();
-  let orbitRadius = 5;
-  let orbitBaseAngle = 0;
-  const orbitSwing = THREE.MathUtils.degToRad(30); // +/-30 degrees (60 total)
-  const orbitSpeed = 0.24; // radians per second
-  let orbitCenterY = 0;
+  // Auto-pan state
+  const initCamPos = camera.position.clone();
+  const panAmount = 4.0; // +/-4.0 units left-right
+  const panSpeed = 0.8; // radians per second
   let loaded = false;
-  let autoRotate = true;
+  let autoPan = true;
 
-  // Stop auto-rotate on user interaction
+  // Stop auto-pan on user interaction
   const canvas = renderer.domElement;
   for (const evt of ["pointerdown", "wheel", "touchstart"]) {
-    canvas.addEventListener(evt, () => { autoRotate = false; }, { once: true });
+    canvas.addEventListener(evt, () => { autoPan = false; }, { once: true });
   }
 
   // Load splat
@@ -95,18 +92,7 @@
     },
     onLoad: (mesh) => {
       console.log("Splat loaded", mesh);
-      const box = mesh.getBoundingBox();
-      const size = new THREE.Vector3();
-      box.getCenter(orbitCenter);
-      box.getSize(size);
-      console.log("Center:", orbitCenter, "Size:", size);
-
-      // Use the manually tuned camera position as orbit origin
-      orbitRadius = Math.sqrt((-0.14 - orbitCenter.x) ** 2 + (0.96 - orbitCenter.z) ** 2);
-      orbitCenterY = 0.41;
-      orbitBaseAngle = Math.atan2(-0.14 - orbitCenter.x, 0.96 - orbitCenter.z);
       loaded = true;
-
       status.textContent = "Loaded";
       setTimeout(() => { status.style.display = "none"; }, 2000);
     },
@@ -116,9 +102,10 @@
 
   // Animation loop
   renderer.setAnimationLoop((time) => {
-    if (loaded && autoRotate) {
-      const angle = Math.sin(time * 0.001 * orbitSpeed) * orbitSwing;
-      splat.rotation.y = angle;
+    if (loaded && autoPan) {
+      const t = time * 0.001;
+      camera.position.x = initCamPos.x + Math.sin(t * panSpeed) * panAmount;
+      camera.position.z = initCamPos.z + (Math.sin(t * panSpeed * 0.7) - 1) * 5.5;
     }
     renderer.render(scene, camera);
     controls.update(camera);
