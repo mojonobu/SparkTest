@@ -47,22 +47,25 @@
     THREE.MathUtils.degToRad(-1.3)
   );
 
+  // Render at half resolution for performance
+  const scale = 0.5;
   const renderer = new THREE.WebGLRenderer({ antialias: false });
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setPixelRatio(window.devicePixelRatio);
+  renderer.setSize(window.innerWidth * scale, window.innerHeight * scale, false);
+  renderer.domElement.style.width = "100vw";
+  renderer.domElement.style.height = "100vh";
+  renderer.setPixelRatio(1.0);
   renderer.setClearColor(0xddd7b5);
   document.body.appendChild(renderer.domElement);
 
-  // SparkRenderer with LOD and rendering optimizations
-  renderer.setPixelRatio(0.75);
+  // SparkRenderer — aggressive LOD for software-rendered environments
   const spark = new SparkRenderer({
     renderer,
     enableLod: true,
-    lodSplatCount: 50000,
-    lodSplatScale: 0.2,
-    lodRenderScale: 10.0,
+    lodSplatCount: 30000,
+    lodSplatScale: 0.15,
+    lodRenderScale: 12.0,
     maxStdDev: 1.5,
-    minAlpha: 0.15,
+    minAlpha: 0.2,
     minSortIntervalMs: 500,
   });
   scene.add(spark);
@@ -133,7 +136,7 @@
   window.addEventListener("resize", () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setSize(window.innerWidth * scale, window.innerHeight * scale, false);
   });
 </script>
 </body>
