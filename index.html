@@ -58,6 +58,7 @@
 
   // Camera controls
   const controls = new SparkControls({ canvas: renderer.domElement });
+  controls.pointerControls.scrollSpeed *= 2;
 
   // FPS counter
   let fps = 0, frameCount = 0, lastFpsTime = performance.now();
