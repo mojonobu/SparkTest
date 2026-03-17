@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Splat Viewer</title>
   <style>
-    body { margin: 0; overflow: hidden; background: #6bacde; }
+    body { margin: 0; overflow: hidden; background: #ddd7b5; }
     canvas { display: block; }
     #status {
       position: fixed; top: 10px; left: 10px;
@@ -50,11 +50,19 @@
   const renderer = new THREE.WebGLRenderer({ antialias: false });
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.setPixelRatio(window.devicePixelRatio);
-  renderer.setClearColor(0x6bacde);
+  renderer.setClearColor(0xddd7b5);
   document.body.appendChild(renderer.domElement);
 
-  // SparkRenderer for splat rendering
-  const spark = new SparkRenderer({ renderer });
+  // SparkRenderer with LOD and rendering optimizations
+  const spark = new SparkRenderer({
+    renderer,
+    enableLod: true,
+    lodSplatCount: 500000,
+    lodRenderScale: 3.0,
+    maxStdDev: Math.sqrt(5),
+    minAlpha: 0.02,
+    minSortIntervalMs: 100,
+  });
   scene.add(spark);
 
   // Camera controls
@@ -78,7 +86,7 @@
 
   // Load splat
   const splat = new SplatMesh({
-    url: "splats/ship.spz",
+    url: "splats/nijojo.spz",
     onProgress: (e) => {
       if (e.total) {
         const pct = Math.round((e.loaded / e.total) * 100);

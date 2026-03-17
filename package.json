@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "@sparkjsdev/spark": "github:sparkjsdev/spark#v2.0.0-preview"
+    "@sparkjsdev/spark": "github:sparkjsdev/spark#v2.0.0-preview",
+    "three": "^0.183.2"
   }
 }
