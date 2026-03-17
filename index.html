@@ -54,14 +54,16 @@
   document.body.appendChild(renderer.domElement);
 
   // SparkRenderer with LOD and rendering optimizations
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
   const spark = new SparkRenderer({
     renderer,
     enableLod: true,
-    lodSplatCount: 500000,
-    lodRenderScale: 3.0,
-    maxStdDev: Math.sqrt(5),
-    minAlpha: 0.02,
-    minSortIntervalMs: 100,
+    lodSplatCount: 250000,
+    lodSplatScale: 0.5,
+    lodRenderScale: 5.0,
+    maxStdDev: Math.sqrt(4),
+    minAlpha: 0.05,
+    minSortIntervalMs: 200,
   });
   scene.add(spark);
 
