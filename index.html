@@ -2,11 +2,11 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
   <title>Splat Viewer</title>
   <style>
-    body { margin: 0; overflow: hidden; background: #ddd7b5; }
-    canvas { display: block; }
+    html, body { margin: 0; overflow: hidden; background: #ddd7b5; touch-action: none; position: fixed; width: 100%; height: 100%; }
+    canvas { display: block; touch-action: none; }
     #status {
       position: fixed; top: 10px; left: 10px;
       color: #fff; font-family: monospace; font-size: 14px;
