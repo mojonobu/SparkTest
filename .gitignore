@@ -3,3 +3,4 @@ node_modules/
 splats/*.ply
 splats/*.spz
 !splats/nijojo.spz
+!splats/sumiyoshijinja.spz
