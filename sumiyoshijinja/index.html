@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
   <title>Splat Viewer - 住吉神社</title>
   <style>
-    html, body { margin: 0; overflow: hidden; background: #e0d4c8; touch-action: none; position: fixed; width: 100%; height: 100%; }
+    html, body { margin: 0; overflow: hidden; background: #EFEFF4; touch-action: none; position: fixed; width: 100%; height: 100%; }
     canvas { display: block; touch-action: none; }
     #status {
       position: fixed; top: 10px; left: 10px;
@@ -50,7 +50,7 @@
   const renderer = new THREE.WebGLRenderer({ antialias: false });
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.setPixelRatio(window.devicePixelRatio);
-  renderer.setClearColor(0xe0d4c8);
+  renderer.setClearColor(0xEFEFF4);
   document.body.appendChild(renderer.domElement);
 
   const spark = new SparkRenderer({ renderer });
